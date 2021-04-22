@@ -1,4 +1,9 @@
-# vue-ts
+# vue3.0 with typescript template
+
+- vue3.0
+- typescript
+- vueRouter
+- vuex
 
 ## Project setup
 ```
