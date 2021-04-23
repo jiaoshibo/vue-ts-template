@@ -1,15 +1,16 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
-    <span>{{count}}</span>
-    <button @click="addCount()">count++</button>
-    <button @click="resetCount()">重置</button>
-    <button @click="getHttpRequest()">axios</button>
+    <el-tag>vuex: {{count}}</el-tag>
+    <el-button @click="addCount()">count++</el-button>
+    <el-button type="primary" plain @click="resetCount()">重置</el-button>
+    <el-button type="primary" plain @click="getHttpRequest()">axios</el-button>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {mapState,mapActions} from 'vuex';
+import {ElMessage} from 'element-plus'
 import axios from '@/utils/axios'
 export default defineComponent({
   name:'About',
@@ -23,12 +24,15 @@ export default defineComponent({
     ...mapActions(['increment','reset']),
     addCount(){
       this.increment({count:100});
+      ElMessage.success(this.count.toString())
     },
     resetCount(){
       this.reset()
     },
     getHttpRequest(){
       axios.get('/users/jiaoshibo').then(res=>{
+        let data = res.data;
+        ElMessage.success(data.events_url)
         console.log(res)
       }).catch(err=>{
         console.error(err);
