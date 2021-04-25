@@ -4,6 +4,7 @@
 - typescript
 - vueRouter
 - vuex
+- axios
 
 ## Project setup
 ```

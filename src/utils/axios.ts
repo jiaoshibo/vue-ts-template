@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import {ElMessage} from 'element-plus'
 const baseUrl = 'https://api.github.com';
 
 const axios = Axios.create({
@@ -6,6 +7,9 @@ const axios = Axios.create({
   timeout:20000
 })
 
+/**
+ * 请求开始时的拦截器
+ */
 axios.interceptors.request.use(
   response=>{
     return response
@@ -23,6 +27,7 @@ axios.interceptors.response.use(
     if(error.response && error.response.data){
       const code = error.response.status;
       const msg = error.response.data.message;
+      ElMessage.error(msg)
       console.error(`[Axios Error]`, error.response)
     }else{
       console.error(`${error}`)
@@ -30,5 +35,4 @@ axios.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
 export default axios;

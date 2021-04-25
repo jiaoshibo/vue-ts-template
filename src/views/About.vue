@@ -30,12 +30,12 @@ export default defineComponent({
       this.reset()
     },
     getHttpRequest(){
-      axios.get('/users/jiaoshibo').then(res=>{
+      this.$get!('/users/jiaoshibo').then(res=>{
         let data = res.data;
-        ElMessage.success(data.events_url)
+        ElMessage.success(data.avatar_url)
         console.log(res)
       }).catch(err=>{
-        console.error(err);
+        console.error(err)
       })
     }
   }
