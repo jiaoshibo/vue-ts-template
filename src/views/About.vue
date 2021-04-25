@@ -11,7 +11,6 @@
 import { defineComponent } from 'vue';
 import {mapState,mapActions} from 'vuex';
 import {ElMessage} from 'element-plus'
-import axios from '@/utils/axios'
 export default defineComponent({
   name:'About',
   created(){

@@ -1,6 +1,15 @@
 import Axios from 'axios';
-import {ElMessage} from 'element-plus'
-const baseUrl = 'https://api.github.com';
+import {ElMessage} from 'element-plus';
+
+let baseUrl:string;
+if(process.env.NODE_ENV==='development'){
+  baseUrl = '/api/'
+}else{
+  let host = window.location.hostname;
+  let protocol = window.location.protocol;
+  let port = window.location.port;
+  baseUrl = `${protocol}://${host}:${port}/`
+}
 
 const axios = Axios.create({
   baseURL:baseUrl,

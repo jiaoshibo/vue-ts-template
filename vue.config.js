@@ -3,8 +3,17 @@ module.exports = {
   outputDir: 'dist',
   assetsDir:'public',
   devServer:{
-    host:'localhost',
+    host:'0.0.0.0',
     port:'8080',
-    open:true
+    open:true,
+    proxy:{
+      '/api':{
+        target: 'https://api.github.com',
+        changeOrigin:true,
+        pathRewrite:{
+          '^/api':''
+        }
+      }
+    }
   }
 }
