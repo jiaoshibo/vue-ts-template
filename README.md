@@ -5,6 +5,7 @@
 - vueRouter
 - vuex
 - axios
+- element-plus
 
 ## Project setup
 ```
