@@ -16,3 +16,8 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.home{
+  margin:0 auto;
+}
+</style>

@@ -1,12 +1,24 @@
 <template>
-  <div id="nav">
+<!--   <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </div>
-  <router-view/>
+  <router-view/> -->
+  <Main />
 </template>
+<script lang="ts">
+import { defineComponent } from 'vue'
+import Main from '@/components/Main.vue'
+export default defineComponent({
+  name:'App',
+  components:{
+    Main
+  }
+})
+</script>
 
 <style>
+* {margin:0;padding:0;}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
