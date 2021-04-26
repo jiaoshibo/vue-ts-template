@@ -21,12 +21,12 @@ export default defineComponent({
   },
   data(){
     return{
-      imgUrl:''
+      imgUrl:require('@/assets/logo.png')
     }
   },
   created(){
     console.log(this.count);
-    this.getHttpRequest()
+    this.getHttpRequest();
   },
   computed:{
     ...mapState(['count','avatar_url'])
