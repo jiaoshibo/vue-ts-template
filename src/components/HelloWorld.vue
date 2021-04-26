@@ -1,10 +1,12 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <el-tag>vuex: {{count}}</el-tag>
-    <el-button @click="addCount()">count++</el-button>
-    <el-button type="primary" plain @click="resetCount()">重置</el-button>
-    <el-button type="primary" plain @click="getHttpRequest()">axios</el-button>
+    <img width="100" height="100" class="avatar" alt="avatar" :src="imgUrl">
+    <div>
+      <el-tag>vuex: {{count}}</el-tag>&nbsp;
+      <el-button type="primary" @click="addCount()">count++</el-button>
+      <el-button @click="resetCount()">重置</el-button>
+    </div>
   </div>
 </template>
 
@@ -17,14 +19,20 @@ export default defineComponent({
   props: {
     msg: String,
   },
+  data(){
+    return{
+      imgUrl:''
+    }
+  },
   created(){
-    console.log(this.count)
+    console.log(this.count);
+    this.getHttpRequest()
   },
   computed:{
-    ...mapState(['count'])
+    ...mapState(['count','avatar_url'])
   },
   methods:{
-    ...mapActions(['increment','reset']),
+    ...mapActions(['increment','reset','set_avatar_url']),
     addCount(){
       this.increment({count:100});
       ElMessage.success(this.count.toString())
@@ -35,10 +43,12 @@ export default defineComponent({
     getHttpRequest(){
       this.$get!('/users/jiaoshibo').then(res=>{
         let data = res.data;
-        ElMessage.success(data.avatar_url)
-        console.log(res)
+        this.set_avatar_url({url:data.avatar_url});
+        this.imgUrl = this.avatar_url;
+        console.log(this.avatar_url,"avatar_url");
+        console.log(this.imgUrl,"imgUrl");
       }).catch(err=>{
-        console.error(err)
+        ElMessage.error(err)
       })
     }
   }
@@ -60,5 +70,9 @@ li {
 }
 a {
   color: #42b983;
+}
+.avatar{
+  border-radius: 50%;
+  margin:10px auto;
 }
 </style>
