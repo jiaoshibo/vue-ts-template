@@ -7,10 +7,20 @@
       <el-button type="primary" @click="addCount()">count++</el-button>
       <el-button @click="resetCount()">重置</el-button>
     </div>
+    <div class="price_div">
+      <h1>Bitcoin Price Index</h1>
+      <div v-for="item in info" :key="item.code">
+        {{item.description}}
+        <span class="lighten">
+          <span v-html="item.symbol"></span>{{toFixedValue(item.rate_float)}}
+        </span>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
+import axios from 'axios';
 import { defineComponent } from 'vue';
 import {mapState,mapActions} from 'vuex';
 import {ElMessage} from 'element-plus'
@@ -21,26 +31,28 @@ export default defineComponent({
   },
   data(){
     return{
-      imgUrl:require('@/assets/logo.png')
+      imgUrl:require('@/assets/logo.png'),
+      info:[],
     }
   },
   created(){
     console.log(this.count);
     this.getHttpRequest();
+    this.getCoindeskApi();
   },
   computed:{
     ...mapState(['count','avatar_url'])
   },
   methods:{
     ...mapActions(['increment','reset','set_avatar_url']),
-    addCount(){
+    addCount():void{
       this.increment({count:100});
       ElMessage.success(this.count.toString())
     },
-    resetCount(){
+    resetCount():void{
       this.reset()
     },
-    getHttpRequest(){
+    getHttpRequest():void{
       this.$get!('/users/jiaoshibo').then(res=>{
         let data = res.data;
         this.set_avatar_url({url:data.avatar_url});
@@ -50,6 +62,17 @@ export default defineComponent({
       }).catch(err=>{
         ElMessage.error(err)
       })
+    },
+    getCoindeskApi():void{
+      axios.get('https://api.coindesk.com/v1/bpi/currentprice.json').then(res=>{
+        let data = res.data;
+        this.info = data.bpi;
+        console.table(this.info)
+      })
+    },
+    /**保留指定的小数位数 */
+    toFixedValue(value:number,number=2){
+      return value.toFixed(number)
     }
   }
 });
@@ -74,5 +97,18 @@ a {
 .avatar{
   border-radius: 50%;
   margin:10px auto;
+}
+.price_div {
+  text-align: left;
+  width: 300px;
+  margin: auto;
+  background-color: #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+}
+.price_div h1{
+  text-align: center;
+  margin-bottom: 5px;
 }
 </style>
