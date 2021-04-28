@@ -45,14 +45,14 @@ export default defineComponent({
   },
   methods:{
     ...mapActions(['increment','reset','set_avatar_url']),
-    addCount():void{
+    addCount(){
       this.increment({count:100});
       ElMessage.success(this.count.toString())
     },
-    resetCount():void{
+    resetCount(){
       this.reset()
     },
-    getHttpRequest():void{
+    getHttpRequest(){
       this.$get!('/users/jiaoshibo').then(res=>{
         let data = res.data;
         this.set_avatar_url({url:data.avatar_url});
@@ -63,14 +63,18 @@ export default defineComponent({
         ElMessage.error(err)
       })
     },
-    getCoindeskApi():void{
+    getCoindeskApi(){
       axios.get('https://api.coindesk.com/v1/bpi/currentprice.json').then(res=>{
         let data = res.data;
         this.info = data.bpi;
         console.table(this.info)
       })
     },
-    /**保留指定的小数位数 */
+    /**
+     * 保留指定的小数位数
+     * @param value 待处理的值
+     * @param number 保留的小数位数，默认2位
+     */
     toFixedValue(value:number,number=2){
       return value.toFixed(number)
     }
