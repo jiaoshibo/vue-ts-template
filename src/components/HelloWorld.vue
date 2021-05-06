@@ -53,7 +53,7 @@ export default defineComponent({
       this.reset()
     },
     getHttpRequest(){
-      this.$get!('/users/jiaoshibo').then(res=>{
+      this.$get('/users/jiaoshibo').then(res=>{
         let data = res.data;
         this.set_avatar_url({url:data.avatar_url});
         this.imgUrl = this.avatar_url;
