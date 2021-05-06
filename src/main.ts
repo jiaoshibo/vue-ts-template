@@ -58,9 +58,9 @@ app.config.globalProperties.$get = async (url:string)=>{
 // 注册自定义类型
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
-    $post?:AxiosInstance;
-    $get?:AxiosInstance;
-    $postForJson?:AxiosInstance;
+    $post?:AxiosInstance["post"];
+    $get?:AxiosInstance["get"];
+    $postForJson?:AxiosInstance["post"];
   }
 }
 
