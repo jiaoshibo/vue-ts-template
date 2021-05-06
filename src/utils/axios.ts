@@ -44,4 +44,63 @@ axios.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-export default axios;
+
+
+/**
+ * 封装 axios 请求方法
+ */
+const formDataRequestHeader = {'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded'};
+const jsonRequestHeader = {'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/json'}
+export const $post = async function(url:string,params?: any){
+  try {
+    return new Promise((resolve, _reject) => {
+      axios.post(url, params, { headers: formDataRequestHeader }).then(res => {
+        // 处理请求结果
+        resolve(res);
+      }).catch(err => {
+        console.error(err);
+      });
+    });
+  } catch (err_1) {
+    console.error(err_1);
+  }
+};
+export const $postForJson = async (url:string,params?:{[key:string]:any})=>{
+  try {
+    return new Promise((resolve, _reject) => {
+      axios.post(url, params, { headers: jsonRequestHeader }).then(res => {
+        resolve(res);
+      }).catch(err => {
+        console.error(err);
+      });
+    });
+  } catch (err_1) {
+    console.error(err_1);
+  }
+}
+
+export const $get = async (url:string)=>{
+  try {
+    return new Promise((resolve, _reject) => {
+      axios.get(url).then(res => {
+        resolve(res);
+      }).catch(err => {
+        console.error(err);
+      });
+    });
+  } catch (err_1) {
+    console.error(err_1);
+  }
+}
+
+export const $getPic = async (url:string)=>{
+  return new Promise((resolve,reject)=>{
+    axios.get(url,{responseType:'arraybuffer'}).then(res=>{
+      resolve(res);
+    }).catch(err=>{
+      console.error(err)
+    })
+  }).catch(reason=>{
+    console.error(reason);
+  })
+}
