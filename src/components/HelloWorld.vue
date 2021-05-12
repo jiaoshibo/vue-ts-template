@@ -56,7 +56,7 @@ export default defineComponent({
       this.reset()
     },
     getHttpRequest(){
-      this.$get('/users/jiaoshibo').then(res=>{
+      this.$get('/users/microsoft').then(res=>{
         let data = res.data;
         this.set_avatar_url({url:data.avatar_url});
         this.imgUrl = this.avatar_url;
@@ -102,7 +102,7 @@ a {
   color: #42b983;
 }
 .avatar{
-  border-radius: 50%;
+  /* border-radius: 50%; */
   margin:10px auto;
 }
 .price_div {
