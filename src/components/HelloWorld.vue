@@ -29,6 +29,9 @@ export default defineComponent({
   props: {
     msg: String,
   },
+  setup(props){
+    console.log('props:',props)
+  },
   data(){
     return{
       imgUrl:require('@/assets/logo.png'),
@@ -36,7 +39,6 @@ export default defineComponent({
     }
   },
   created(){
-    console.log(this.count);
     this.getHttpRequest();
     this.getCoindeskApi();
   },
@@ -48,6 +50,7 @@ export default defineComponent({
     addCount(){
       this.increment({count:100});
       ElMessage.success(this.count.toString())
+      console.log(this.$refs)
     },
     resetCount(){
       this.reset()
