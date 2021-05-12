@@ -3,7 +3,7 @@ import Home from '../views/Home.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: Home
   },
@@ -22,4 +22,12 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach((to,from,next)=>{
+  console.log(to)
+  if(to.path==='/'){
+    next({path:'/home'})
+  }else{
+    next()
+  }
+})
 export default router
