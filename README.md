@@ -7,6 +7,16 @@
 - axios
 - element-plus
 
+## axios 定义文件
+
+src/utils/axios.ts
+
+## 环境变量配置文件
+
+.env.development
+
+.env.production
+
 ## Project setup
 ```
 npm install
