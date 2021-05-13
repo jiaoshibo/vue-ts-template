@@ -35,7 +35,7 @@ export default defineComponent({
   data(){
     return{
       imgUrl:require('@/assets/logo.png'),
-      info:[],
+      info:[] as unknown[],
     }
   },
   created(){
