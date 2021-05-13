@@ -3,7 +3,7 @@
     <h1>{{ msg }}</h1>
     <img width="100" height="100" class="avatar" alt="avatar" :src="imgUrl">
     <div>
-      <el-tag>vuex: {{count}}</el-tag>&nbsp;
+      <el-tag size="medium">vuex: {{count}}</el-tag>&nbsp;
       <el-button type="primary" @click="addCount()">count++</el-button>
       <el-button @click="resetCount()">重置</el-button>
     </div>
@@ -55,6 +55,7 @@ export default defineComponent({
     resetCount(){
       this.reset()
     },
+    /**使用自定义的axios封装进行请求 */
     getHttpRequest(){
       this.$get('/users/microsoft').then(res=>{
         let data = res.data;

@@ -1,5 +1,7 @@
 import Axios from 'axios';
+import {AxiosRequestConfig} from 'axios'
 import {ElMessage} from 'element-plus';
+import qs from 'qs'
 let baseUrl:string;
 if(process.env.NODE_ENV==='develop'){
   baseUrl ='/api/';
@@ -20,8 +22,14 @@ const axios = Axios.create({
  * 请求开始时的拦截器
  */
 axios.interceptors.request.use(
-  response=>{
-    return response
+  request=>{
+    console.log('request:',request)
+    if(request.method==='post'&&request.headers['Content-Type']==='application/x-www-form-urlencoded'){
+      request.data = qs.stringify({
+        ...request.data
+      })
+    }
+    return request
   },
   error=>{
     return Promise.reject(error)
@@ -49,12 +57,10 @@ axios.interceptors.response.use(
 /**
  * 封装 axios 请求方法
  */
-const formDataRequestHeader = {'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded'};
-const jsonRequestHeader = {'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/json'}
-export const $post = async function(url:string,params?: any){
+export const $post = async function(url:string,params?: any,config:AxiosRequestConfig={ headers: {'Content-Type': 'application/x-www-form-urlencoded'}}){
   try {
     return new Promise((resolve, _reject) => {
-      axios.post(url, params, { headers: formDataRequestHeader }).then(res => {
+      axios.post(url, params, config).then(res => {
         // 处理请求结果
         resolve(res);
       }).catch(err => {
@@ -65,10 +71,10 @@ export const $post = async function(url:string,params?: any){
     console.error(err_1);
   }
 };
-export const $postForJson = async (url:string,params?:{[key:string]:any})=>{
+export const $postForJson = async (url:string,params?:{[key:string]:any},config:AxiosRequestConfig={headers: {'Content-Type': 'application/json'}})=>{
   try {
     return new Promise((resolve, _reject) => {
-      axios.post(url, params, { headers: jsonRequestHeader }).then(res => {
+      axios.post(url, params, config).then(res => {
         resolve(res);
       }).catch(err => {
         console.error(err);
@@ -79,10 +85,10 @@ export const $postForJson = async (url:string,params?:{[key:string]:any})=>{
   }
 }
 
-export const $get = async (url:string)=>{
+export const $get = async (url:string,config?:AxiosRequestConfig)=>{
   try {
     return new Promise((resolve, _reject) => {
-      axios.get(url).then(res => {
+      axios.get(url,config).then(res => {
         resolve(res);
       }).catch(err => {
         console.error(err);
@@ -91,16 +97,4 @@ export const $get = async (url:string)=>{
   } catch (err_1) {
     console.error(err_1);
   }
-}
-
-export const $getPic = async (url:string)=>{
-  return new Promise((resolve,reject)=>{
-    axios.get(url,{responseType:'arraybuffer'}).then(res=>{
-      resolve(res);
-    }).catch(err=>{
-      console.error(err)
-    })
-  }).catch(reason=>{
-    console.error(reason);
-  })
 }
