@@ -1,11 +1,15 @@
 <template>
   <el-container class="main-container">
-    <el-header class="top">
+    <el-header class="current-header">
       <Header></Header>
     </el-header>
-    <el-main class="content">
-      <router-view></router-view>
-    </el-main>
+    <el-container class="current-container">
+      <el-aside width="200px" class="current-aside"></el-aside>
+      <el-main class="current-main">
+        <router-view></router-view>
+      </el-main>
+    </el-container>
+    <el-footer class="current-footer"></el-footer>
   </el-container>
 </template>
 <script lang="ts">
@@ -24,26 +28,22 @@ export default defineComponent({
   right: 0;
   top: 0;
   bottom: 0;
-  widows: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
-.main-container .top{
-  position: relative;
-  box-sizing: border-box;
-  width: 100%;
-  height: 60px;
-  background-color: #eee;
+.current-header, .current-footer{
+  background-color: #B3C0D1;
+  color: #333;
+  text-align: center;
+  height: 50px;
 }
-.main-container .content{
-  position: relative;
-  box-sizing: border-box;
-  width: 100%;
-  height:100%;
-  display: flex;
-  justify-content: space-between;
+
+.current-aside{
+  background-color: #D3DCE6;
+  color: #333;
+  text-align: center;
+}
+.current-main{
+  background-color: #E9EEF3;
+  color: #333;
+  text-align: center;
 }
 </style>
