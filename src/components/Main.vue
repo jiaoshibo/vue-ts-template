@@ -9,6 +9,7 @@
         <router-view></router-view>
       </el-main>
     </el-container>
+    <el-footer class="current-footer"></el-footer>
   </el-container>
 </template>
 <script lang="ts">
@@ -28,7 +29,7 @@ export default defineComponent({
   top: 0;
   bottom: 0;
 }
-.current-header{
+.current-header, .current-footer{
   background-color: #B3C0D1;
   color: #333;
   text-align: center;
