@@ -68,7 +68,7 @@ export default defineComponent({
       })
     },
     getCoindeskApi(){
-      axios.get('https://api.coindesk.com/v1/bpi/currentprice.json').then(res=>{
+      this.$get('https://api.coindesk.com/v1/bpi/currentprice.json').then(res=>{
         let data = res.data;
         this.info = data.bpi;
         console.table(this.info)
