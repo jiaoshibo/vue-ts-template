@@ -6,11 +6,7 @@ let baseUrl:string;
 if(process.env.NODE_ENV==='develop'){
   baseUrl ='/api/';
 }else{
-  let host = window.location.hostname;
-  let protocol = window.location.protocol;
-  let port = window.location.port;
-  // baseUrl = `${protocol}://${host}:${port}/`
-  baseUrl = 'https://api.github.com';
+  baseUrl = <string>process.env.VUE_APP_BASE_URL
 }
 
 const axios = Axios.create({
