@@ -6,15 +6,15 @@
       <template #header>
         <span>表单验证</span>
       </template>
-      <el-form :model="formKey" label-width="80px" :rules="formRules" ref="formObj">
+      <el-form :model="ruleForm" label-width="80px" :rules="formRules" ref="elForm">
         <el-form-item label="IP地址" prop="ip">
-          <el-input v-model="formKey.ip"></el-input>
+          <el-input v-model="ruleForm.ip"></el-input>
         </el-form-item>
         <el-form-item label="端口" prop="port">
-          <el-input v-model="formKey.port"></el-input>
+          <el-input v-model="ruleForm.port"></el-input>
         </el-form-item>
         <el-form-item label="手机号" prop="phonenumber">
-          <el-input v-model="formKey.phonenumber"></el-input>
+          <el-input v-model="ruleForm.phonenumber"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button @click="resetFormValidate">取 消</el-button>
@@ -38,20 +38,16 @@ export default defineComponent({
   name:'About',
   setup(){
     console.log('This is an about page');
-    const formObj = ref<HTMLFormElement | null>(null)
+    const elForm = ref<HTMLFormElement | null>(null)
     onMounted(()=>{
-      console.log(formObj)
+      console.log(elForm)
     });
 
-    return {formObj}
+    return {elForm}
   },
   data(){
     return {
-      formKey:{
-        ip:'',
-        port:'',
-        phonenumber:''
-      } as formType,
+      ruleForm:{} as formType,
       formRules:{
         ip:[{required:true,message:'请输入IP地址',trigger:'blur'},{validator:rules.FormValidate.validateIpAddress,trigger:'blur'}],
         port:[
@@ -67,12 +63,12 @@ export default defineComponent({
   },
   methods:{
     resetFormValidate(){
-      this.formObj!.clearValidate()
+      this.elForm!.clearValidate()
     },
     confirmFormValidate(){
-      this.formObj!.validate((f:boolean)=>{
+      this.elForm!.validate((f:boolean)=>{
         if(f){
-          console.log(f)
+          console.log(this.ruleForm.ip)
         }
       })
     }

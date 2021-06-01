@@ -20,7 +20,6 @@
 </template>
 
 <script lang="ts">
-import axios from 'axios';
 import { defineComponent } from 'vue';
 import {mapState,mapActions} from 'vuex';
 import {ElMessage} from 'element-plus'
@@ -30,7 +29,7 @@ export default defineComponent({
     msg: String,
   },
   setup(props){
-    console.log('props:',props)
+    console.log('props:',props.msg)
   },
   data(){
     return{
