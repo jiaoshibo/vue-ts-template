@@ -1,7 +1,7 @@
 <template>
   <el-container class="main-container">
     <el-header class="current-header">
-      <Header></Header>
+      <Header/>
     </el-header>
     <el-container class="current-container">
       <el-aside width="200px" class="current-aside"></el-aside>
