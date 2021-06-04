@@ -20,7 +20,6 @@
 </template>
 
 <script lang="ts">
-import axios from 'axios';
 import { defineComponent } from 'vue';
 import {mapState,mapActions} from 'vuex';
 import {ElMessage} from 'element-plus'
@@ -30,7 +29,7 @@ export default defineComponent({
     msg: String,
   },
   setup(props){
-    console.log('props:',props)
+    console.log('props:',props.msg)
   },
   data(){
     return{
@@ -68,7 +67,7 @@ export default defineComponent({
       })
     },
     getCoindeskApi(){
-      axios.get('https://api.coindesk.com/v1/bpi/currentprice.json').then(res=>{
+      this.$get('https://api.coindesk.com/v1/bpi/currentprice.json').then(res=>{
         let data = res.data;
         this.info = data.bpi;
         console.table(this.info)
@@ -88,6 +87,9 @@ export default defineComponent({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.hello{
+  text-align:center;
+}
 h3 {
   margin: 40px 0 0;
 }

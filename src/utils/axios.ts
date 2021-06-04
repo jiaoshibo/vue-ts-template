@@ -1,16 +1,12 @@
 import Axios from 'axios';
-import {AxiosRequestConfig} from 'axios'
+import {AxiosRequestConfig,AxiosResponse} from 'axios'
 import {ElMessage} from 'element-plus';
 import qs from 'qs'
 let baseUrl:string;
 if(process.env.NODE_ENV==='develop'){
   baseUrl ='/api/';
 }else{
-  let host = window.location.hostname;
-  let protocol = window.location.protocol;
-  let port = window.location.port;
-  // baseUrl = `${protocol}://${host}:${port}/`
-  baseUrl = 'https://api.github.com';
+  baseUrl = <string>process.env.VUE_APP_BASE_URL
 }
 
 const axios = Axios.create({
@@ -57,44 +53,32 @@ axios.interceptors.response.use(
 /**
  * 封装 axios 请求方法
  */
-export const $post = async function(url:string,params?: any,config:AxiosRequestConfig={ headers: {'Content-Type': 'application/x-www-form-urlencoded'}}){
-  try {
-    return new Promise((resolve, _reject) => {
-      axios.post(url, params, config).then(res => {
-        // 处理请求结果
-        resolve(res);
-      }).catch(err => {
-        console.error(err);
-      });
+export function $post(url:string,params?: any,config:AxiosRequestConfig={ headers: {'Content-Type': 'application/x-www-form-urlencoded'}}):Promise<AxiosResponse>{
+  return new Promise((resolve, _reject) => {
+    axios.post(url, params, config).then(res => {
+      // 处理请求结果
+      resolve(res);
+    }).catch(err => {
+      console.error(err);
     });
-  } catch (err_1) {
-    console.error(err_1);
-  }
+  })
 };
-export const $postForJson = async (url:string,params?:{[key:string]:any},config:AxiosRequestConfig={headers: {'Content-Type': 'application/json'}})=>{
-  try {
-    return new Promise((resolve, _reject) => {
-      axios.post(url, params, config).then(res => {
-        resolve(res);
-      }).catch(err => {
-        console.error(err);
-      });
+export function $postForJson(url:string,params?:{[key:string]:any},config:AxiosRequestConfig={headers: {'Content-Type': 'application/json'}}):Promise<AxiosResponse>{
+  return new Promise((resolve, _reject) => {
+    axios.post(url, params, config).then(res => {
+      resolve(res);
+    }).catch(err => {
+      console.error(err);
     });
-  } catch (err_1) {
-    console.error(err_1);
-  }
+  });
 }
 
-export const $get = async (url:string,config?:AxiosRequestConfig)=>{
-  try {
-    return new Promise((resolve, _reject) => {
-      axios.get(url,config).then(res => {
-        resolve(res);
-      }).catch(err => {
-        console.error(err);
-      });
+export function $get(url:string,config?:AxiosRequestConfig):Promise<AxiosResponse>{
+  return new Promise((resolve, _reject) => {
+    axios.get(url,config).then(res => {
+      resolve(res);
+    }).catch(err => {
+      console.error(err);
     });
-  } catch (err_1) {
-    console.error(err_1);
-  }
+  });
 }

@@ -5,7 +5,6 @@ import store from './store'
 import ElementPlus from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
 import {$post,$get,$postForJson} from './utils/axios';
-import {AxiosInstance } from 'axios';
 import '@/assets/styles/index.css'
 const app = createApp(App);
 
@@ -17,9 +16,9 @@ app.config.globalProperties.$get = $get;
 // 注册自定义类型
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
-    $post:AxiosInstance["post"];
-    $get:AxiosInstance["get"];
-    $postForJson:AxiosInstance["post"];
+    $post:typeof $post;
+    $get:typeof $get;
+    $postForJson:typeof $postForJson
   }
 }
 

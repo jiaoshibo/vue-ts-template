@@ -1,7 +1,7 @@
 <template>
   <el-container class="main-container">
     <el-header class="current-header">
-      <Header></Header>
+      <Header/>
     </el-header>
     <el-container class="current-container">
       <el-aside width="200px" class="current-aside"></el-aside>
@@ -44,6 +44,5 @@ export default defineComponent({
 .current-main{
   background-color: #E9EEF3;
   color: #333;
-  text-align: center;
 }
 </style>
