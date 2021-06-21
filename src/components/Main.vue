@@ -6,7 +6,15 @@
     <el-container class="current-container">
       <el-aside width="200px" class="current-aside"></el-aside>
       <el-main class="current-main">
-        <router-view></router-view>
+        <n-loading-bar-provider>
+          <n-message-provider>
+            <n-notification-provider>
+              <n-dialog-provider>
+                <router-view></router-view>
+              </n-dialog-provider>
+            </n-notification-provider>
+          </n-message-provider>
+        </n-loading-bar-provider>
       </el-main>
     </el-container>
     <el-footer class="current-footer"></el-footer>
@@ -15,10 +23,11 @@
 <script lang="ts">
 import Header from '@/components/Header.vue';
 import { defineComponent } from 'vue'
+import {NMessageProvider,NLoadingBarProvider,NNotificationProvider,NDialogProvider} from 'naive-ui'
 
 export default defineComponent({
   name:'Main',
-  components:{Header},
+  components:{Header,NMessageProvider,NLoadingBarProvider,NNotificationProvider,NDialogProvider},
 })
 </script>
 <style scoped>
