@@ -3,9 +3,9 @@
     <h1>{{ msg }}</h1>
     <img width="100" height="100" class="avatar" alt="avatar" :src="imgUrl">
     <div>
-      <el-tag size="medium">vuex: {{count}}</el-tag>&nbsp;
-      <el-button type="primary" @click="addCount()">count++</el-button>
-      <el-button @click="resetCount()">重置</el-button>
+      <n-tag size="medium">vuex: {{count}}</n-tag> &nbsp;
+      <n-button type="primary" @click="addCount()">count++</n-button>&nbsp;
+      <n-button @click="resetCount()">重置</n-button>
     </div>
     <div class="price_div">
       <h1>Bitcoin Price Index</h1>
@@ -22,14 +22,19 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {mapState,mapActions} from 'vuex';
-import {ElMessage} from 'element-plus'
+import { NButton, NTag,useMessage } from 'naive-ui'
 export default defineComponent({
   name: 'HelloWorld',
   props: {
     msg: String,
   },
+  components:{ NButton, NTag },
   setup(props){
-    console.log('props:',props.msg)
+    console.log('props:',props.msg);
+    const naiveMessage = useMessage();
+    return{
+      naiveMessage
+    }
   },
   data(){
     return{
@@ -48,7 +53,7 @@ export default defineComponent({
     ...mapActions(['increment','reset','set_avatar_url']),
     addCount(){
       this.increment({count:100});
-      ElMessage.success(this.count.toString())
+      this.naiveMessage.success(this.count.toString())
       console.log(this.$refs)
     },
     resetCount(){
@@ -63,7 +68,7 @@ export default defineComponent({
         console.log(this.avatar_url,"avatar_url");
         console.log(this.imgUrl,"imgUrl");
       }).catch(err=>{
-        ElMessage.error(err)
+        this.naiveMessage.error(err)
       })
     },
     getCoindeskApi(){

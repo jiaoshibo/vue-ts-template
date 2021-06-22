@@ -5,7 +5,6 @@
 - vueRouter
 - vuex
 - axios
-- element-plus
 - naiveUI
 
 ## axios 定义文件

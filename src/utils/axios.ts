@@ -1,7 +1,9 @@
 import Axios from 'axios';
 import {AxiosRequestConfig,AxiosResponse} from 'axios'
-import {ElMessage} from 'element-plus';
-import qs from 'qs'
+import qs from 'qs';
+import {useMessage} from 'naive-ui';
+
+const naiveMessage = useMessage()
 let baseUrl:string;
 if(process.env.NODE_ENV==='develop'){
   baseUrl ='/api/';
@@ -40,7 +42,7 @@ axios.interceptors.response.use(
     if(error.response && error.response.data){
       const code = error.response.status;
       const msg = error.response.data.message;
-      ElMessage.error(msg)
+      naiveMessage.error(msg)
       console.error(`[Axios Error]`, error.response)
     }else{
       console.error(`${error}`)
