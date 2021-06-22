@@ -178,16 +178,16 @@ export default defineComponent({
     })));
 
     // 被选中的列的 key
-    const checkedRowKeys = ref([1,2]);
+    let checkedRowKeys = reactive([1,2]);
     // 表格分页配置
-    const pagination = ref({
+    const pagination = reactive({
       pageSize:10,
       pageSlot:5
     });
     // 表格选择时触发
     function handleCheck(key:number[]){
       console.log(key);
-      checkedRowKeys.value = key;
+      checkedRowKeys = key;
     }
     // 表格 end
     return {
