@@ -21,7 +21,6 @@ const axios = Axios.create({
  */
 axios.interceptors.request.use(
   request=>{
-    console.log('request:',request)
     if(request.method==='post'&&request.headers['Content-Type']==='application/x-www-form-urlencoded'){
       request.data = qs.stringify({
         ...request.data

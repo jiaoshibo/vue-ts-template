@@ -52,7 +52,6 @@ export default defineComponent({
     });
     function setAreaHeight(){
       areaHeight.value = (screenHeight.value) - 100;
-      console.log(screenHeight.value,areaHeight.value)
     }
     return {
       screenHeight:screenHeight,

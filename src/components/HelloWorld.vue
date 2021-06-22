@@ -65,8 +65,6 @@ export default defineComponent({
         let data = res.data;
         this.set_avatar_url({url:data.avatar_url});
         this.imgUrl = this.avatar_url;
-        console.log(this.avatar_url,"avatar_url");
-        console.log(this.imgUrl,"imgUrl");
       }).catch(err=>{
         this.naiveMessage.error(err)
       })
@@ -75,7 +73,6 @@ export default defineComponent({
       this.$get('https://api.coindesk.com/v1/bpi/currentprice.json').then(res=>{
         let data = res.data;
         this.info = data.bpi;
-        console.table(this.info)
       })
     },
     /**
