@@ -29,13 +29,13 @@
     <template #header-extra> 噢! </template>
     内容
     <template #footer>
-      <n-button @click="changeModalValue(false)" type="primary">关闭弹窗</n-button>
+      <n-button @click="confirmDialogBtn(false)" type="primary">关闭弹窗</n-button>
     </template>
   </n-modal>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive,h } from 'vue'
+import { defineComponent, ref, reactive, toRaw } from 'vue'
 import { useMessage, NForm, NFormItem, NInput, NButton, NModal, NSpace,useLoadingBar, useNotification, NAvatar } from 'naive-ui';
 export default defineComponent({
   components:{
@@ -59,30 +59,10 @@ export default defineComponent({
         formRef.value.validate((errors: any[] |
           undefined) => {
           if (!errors) {
-            notification.create({
-              title: "Wouldn't it be Nice",
-              description: 'From the Beach Boys',
-              content: `Wouldn't it be nice if we were older
-Then we wouldn't have to wait so long
-And wouldn't it be nice to live together
-In the kind of world where we belong
-You know its gonna make it that much better
-When we can say goodnight and stay together
-Wouldn't it be nice if we could wake up
-In the morning when the day is new
-And after having spent the day together
-Hold each other close the whole night through`,
-              meta: '2019-5-27 15:11',
-              duration:5000,
-              avatar: () =>
-                h(NAvatar, {
-                  size: 'small',
-                  round: true,
-                  src: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'
-                }),
-              onAfterLeave: () => {
-                message.success("Wouldn't it be Nice")
-              }
+            notification.success({
+              content: '说点啥呢',
+              meta: '想不出来',
+              duration:2000
             })
             loading?.finish()
           } else {
@@ -129,7 +109,11 @@ Hold each other close the whole night through`,
     const segmented = reactive({
       content: 'soft',
       footer: 'soft'
-    })
+    });
+    function confirmDialogBtn(flag:boolean){
+      console.log(toRaw(formValue))
+      changeModalValue(flag)
+    }
     return {
       formRef,
       size:ref('medium'),
@@ -140,7 +124,8 @@ Hold each other close the whole night through`,
       bodyStyle,
       segmented,
       changeModalValue,
-      resetFormValidate
+      resetFormValidate,
+      confirmDialogBtn
     }
   }
 })
