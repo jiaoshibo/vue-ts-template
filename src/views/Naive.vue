@@ -1,4 +1,5 @@
 <template>
+<!-- 表单 -->
   <n-form inline :label-width="80" :model="formValue" :rules="rules" :size="size" ref="formRef">
     <n-form-item label="姓名" path="user.name">
       <n-input v-model:value="formValue.user.name" placeholder="输入姓名" />
@@ -16,6 +17,7 @@
       </n-space>
     </n-form-item>
   </n-form>
+  <!-- 弹窗 -->
   <n-button @click="changeModalValue(true)" type="primary">打开弹窗</n-button>
   <n-modal
     v-model:show="showModal"
@@ -39,22 +41,38 @@
       </n-button>
     </template>
   </n-modal>
+  <br/>
+  <!-- 表格 -->
+  <n-space>
+    <n-data-table
+      ref="table"
+      :columns="columns"
+      :data="tableData"
+      :pagination="pagination"
+      :row-key="(row) => row.id"
+      :checked-row-keys="checkedRowKeys"
+      @update:checked-row-keys="handleCheck"
+    />
+  </n-space>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, reactive, toRaw } from 'vue'
-import { useMessage, NForm, NFormItem, NInput, NButton, NModal, NSpace,useLoadingBar, useNotification, NAvatar, NIcon } from 'naive-ui';
+import { useMessage, NForm, NFormItem, NInput, NButton, NModal, NSpace,useLoadingBar, useNotification, NAvatar, NIcon, NDataTable } from 'naive-ui';
 
 import {Close as CloseIcon} from '@vicons/ionicons5'
 export default defineComponent({
   components:{
-    NForm,NFormItem,NInput,NButton,NModal,NSpace,NAvatar,NIcon,CloseIcon
+    NForm,NFormItem,NInput,NButton,NModal,NSpace,NAvatar,NIcon,CloseIcon, NDataTable
   },
   setup() {
+    // 表单实例
     const formRef = ref<typeof NForm>();
     const message = useMessage();
     const loading = useLoadingBar();
     const notification = useNotification()
+
+    // 表单数据
     let formValue = reactive({
       user:{
         name:'',age:''
@@ -85,6 +103,7 @@ export default defineComponent({
     const resetFormValidate = ()=>{
       formRef.value!.restoreValidation()
     }
+    // 表单验证规则
     const rules = {
       user: {
         name: {
@@ -119,10 +138,58 @@ export default defineComponent({
       content: 'soft',
       footer: 'soft'
     });
+
+    // 弹窗确认按钮
     function confirmDialogBtn(flag:boolean){
       console.log(toRaw(formValue))
       changeModalValue(flag)
+    };
+
+    // 表格 start
+
+    // 表格列数据
+    const columns = reactive([
+      {
+        type: "selection",
+        disabled(row:any, index:number) {
+          return row.name === "Edward King 3";
+        },
+      },
+      {
+        title: "Name",
+        key: "name",
+      },
+      {
+        title: "Age",
+        key: "age",
+      },
+      {
+        title: "Address",
+        key: "address",
+      },
+    ]);
+
+    // 表格数据
+    const tableData = reactive(Array.apply(null, new Array(46)).map((_, index) => ({
+      name: `Edward King ${index}`,
+      age: 32,
+      address: `London, Park Lane no. ${index}`,
+      id: index + 1,
+    })));
+
+    // 被选中的列的 key
+    const checkedRowKeys = ref([1,2]);
+    // 表格分页配置
+    const pagination = ref({
+      pageSize:10,
+      pageSlot:5
+    });
+    // 表格选择时触发
+    function handleCheck(key:number[]){
+      console.log(key);
+      checkedRowKeys.value = key;
     }
+    // 表格 end
     return {
       formRef,
       size:ref('medium'),
@@ -134,7 +201,15 @@ export default defineComponent({
       segmented,
       changeModalValue,
       resetFormValidate,
-      confirmDialogBtn
+      confirmDialogBtn,
+
+      // table start
+      tableData,
+      columns,
+      checkedRowKeys,
+      pagination,
+      handleCheck
+      // table end
     }
   }
 })
