@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" @emit-button="getEmitButton" />
   </div>
 </template>
 
@@ -11,6 +11,12 @@ export default defineComponent({
   name: 'Home',
   components: {
     HelloWorld,
+  },
+  setup(){
+    function getEmitButton(v:string){
+      console.log(v)
+    };
+    return {getEmitButton}
   }
 });
 </script>

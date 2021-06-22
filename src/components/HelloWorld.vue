@@ -16,6 +16,7 @@
         </span>
       </div>
     </div>
+    <n-button type="primary" @click="setEmit('set-emit-function')">emit</n-button>
   </div>
 </template>
 
@@ -29,11 +30,15 @@ export default defineComponent({
     msg: String,
   },
   components:{ NButton, NTag },
-  setup(props){
+  setup(props,context){
     console.log('props:',props.msg);
     const naiveMessage = useMessage();
+    function setEmit(msg:string){
+      context.emit('emit-button',msg)
+    }
     return{
-      naiveMessage
+      naiveMessage,
+      setEmit
     }
   },
   data(){
