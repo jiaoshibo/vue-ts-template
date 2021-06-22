@@ -21,7 +21,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, getCurrentInstance } from 'vue';
+import {useStore} from 'vuex'
 import {mapState,mapActions} from 'vuex';
 import { NButton, NTag,useMessage } from 'naive-ui'
 export default defineComponent({
@@ -30,15 +31,24 @@ export default defineComponent({
     msg: String,
   },
   components:{ NButton, NTag },
-  setup(props,context){
-    console.log('props:',props.msg);
+  setup(props,context){;
     const naiveMessage = useMessage();
     function setEmit(msg:string){
       context.emit('emit-button',msg)
     }
+    const store = useStore()
+    function addCount(){
+      store.dispatch('increment',{count:100});
+    };
+    function resetCount(){
+      store.dispatch('reset');
+    }
     return{
       naiveMessage,
-      setEmit
+      setEmit,
+      addCount,
+      resetCount,
+      store
     }
   },
   data(){
@@ -55,21 +65,12 @@ export default defineComponent({
     ...mapState(['count','avatar_url'])
   },
   methods:{
-    ...mapActions(['increment','reset','set_avatar_url']),
-    addCount(){
-      this.increment({count:100});
-      this.naiveMessage.success(this.count.toString())
-      console.log(this.$refs)
-    },
-    resetCount(){
-      this.reset()
-    },
     /**使用自定义的axios封装进行请求 */
     getHttpRequest(){
       this.$get('/users/microsoft').then(res=>{
         let data = res.data;
-        this.set_avatar_url({url:data.avatar_url});
-        this.imgUrl = this.avatar_url;
+        this.store.dispatch('set_avatar_url',{url:data.avatar_url});
+        this.imgUrl = this.store.state.avatar_url;
       }).catch(err=>{
         this.naiveMessage.error(err)
       })
