@@ -29,17 +29,26 @@
     <template #header-extra> 噢! </template>
     内容
     <template #footer>
-      <n-button @click="confirmDialogBtn(false)" type="primary">关闭弹窗</n-button>
+      <n-button @click="confirmDialogBtn(false)" type="primary">
+        <template #icon>
+          <n-icon>
+            <close-icon />
+          </n-icon>
+        </template>
+        关闭弹窗
+      </n-button>
     </template>
   </n-modal>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, reactive, toRaw } from 'vue'
-import { useMessage, NForm, NFormItem, NInput, NButton, NModal, NSpace,useLoadingBar, useNotification, NAvatar } from 'naive-ui';
+import { useMessage, NForm, NFormItem, NInput, NButton, NModal, NSpace,useLoadingBar, useNotification, NAvatar, NIcon } from 'naive-ui';
+
+import {Close as CloseIcon} from '@vicons/ionicons5'
 export default defineComponent({
   components:{
-    NForm,NFormItem,NInput,NButton,NModal,NSpace,NAvatar
+    NForm,NFormItem,NInput,NButton,NModal,NSpace,NAvatar,NIcon,CloseIcon
   },
   setup() {
     const formRef = ref<typeof NForm>();

@@ -3,7 +3,7 @@
     <h1>{{ msg }}</h1>
     <img width="100" height="100" class="avatar" alt="avatar" :src="imgUrl">
     <div>
-      <n-tag size="medium">vuex: {{count}}</n-tag> &nbsp;
+      <n-tag round type="info">vuex: {{count}}</n-tag> &nbsp;
       <n-button type="primary" @click="addCount()">count++</n-button>&nbsp;
       <n-button @click="resetCount()">重置</n-button>
     </div>
