@@ -60,7 +60,7 @@ export function $post(url:string,params?: any,config:AxiosRequestConfig={ header
       // 处理请求结果
       resolve(res);
     }).catch(err => {
-      console.error(err);
+      console.log(err);
     });
   })
 };
@@ -69,7 +69,7 @@ export function $postForJson(url:string,params?:{[key:string]:any},config:AxiosR
     axios.post(url, params, config).then(res => {
       resolve(res);
     }).catch(err => {
-      console.error(err);
+      console.log(err);
     });
   });
 }
@@ -79,7 +79,7 @@ export function $get(url:string,config?:AxiosRequestConfig):Promise<AxiosRespons
     axios.get(url,config).then(res => {
       resolve(res);
     }).catch(err => {
-      console.error(err);
+      _reject(err)
     });
   });
 }
