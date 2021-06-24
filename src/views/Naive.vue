@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, toRaw } from 'vue'
+import { defineComponent, ref, reactive, toRaw, readonly } from 'vue'
 import { useMessage, NForm, NFormItem, NInput, NButton, NModal, NSpace,useLoadingBar, useNotification, NAvatar, NIcon, NDataTable } from 'naive-ui';
 
 import {Close as CloseIcon} from '@vicons/ionicons5'
@@ -105,7 +105,7 @@ export default defineComponent({
       formRef.value!.restoreValidation()
     }
     // 表单验证规则
-    const rules = {
+    const _rules = {
       user: {
         name: {
           required: true,
@@ -124,6 +124,7 @@ export default defineComponent({
         trigger: ['input']
       }
     };
+    const rules = readonly(_rules)
     let showModal = ref(false);
     /**
      * 切换弹窗显示
