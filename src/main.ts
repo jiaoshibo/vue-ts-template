@@ -6,14 +6,13 @@ import router from './router'
 import store from './store'
 
 // axios 请求方法
-import {$post,$get,$postForJson} from './utils/axios';
 
 // 全局css
 import '@/assets/styles/index.css'
 
 const app = createApp(App);
 
-app.config.globalProperties.$post = $post;
+/* app.config.globalProperties.$post = $post;
 app.config.globalProperties.$postForJson = $postForJson;
 app.config.globalProperties.$get = $get;
  
@@ -25,7 +24,7 @@ declare module '@vue/runtime-core' {
     $get:typeof $get;
     $postForJson:typeof $postForJson
   }
-}
+} */
 
 
 // 程序挂载
