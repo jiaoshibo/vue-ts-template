@@ -62,6 +62,7 @@ import { useMessage, NForm, NFormItem, NInput, NButton, NModal, NSpace,useLoadin
 
 import {Close as CloseIcon} from '@vicons/ionicons5'
 export default defineComponent({
+  name:'naive',
   components:{
     NForm,NFormItem,NInput,NButton,NModal,NSpace,NAvatar,NIcon,CloseIcon, NDataTable
   },
