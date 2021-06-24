@@ -11,6 +11,12 @@
 
 src/utils/axios.ts
 
+> ⚠ 使用 axios 时需要按需引入
+
+```ts
+import {$get,$post,$postForJson} from '@/utils/axios' 
+```
+
 ## 环境变量配置文件
 
 .env.development
