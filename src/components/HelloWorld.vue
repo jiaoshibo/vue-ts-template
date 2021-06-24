@@ -9,7 +9,7 @@
     </div>
     <div class="price_div">
       <h1>Bitcoin Price Index</h1>
-      <div v-for="item in info" :key="item.code">
+      <div v-for="item in infoData" :key="item.code">
         {{item.description}}
         <span class="lighten">
           <span v-html="item.symbol"></span>{{toFixedValue(item.rate_float)}}
@@ -21,73 +21,75 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, getCurrentInstance } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
 import {useStore} from 'vuex'
-import {mapState,mapActions} from 'vuex';
-import { NButton, NTag,useMessage } from 'naive-ui'
+import { NButton, NTag,useMessage } from 'naive-ui';
+
+import {$get} from '@/utils/axios';
+
 export default defineComponent({
   name: 'HelloWorld',
   props: {
     msg: String,
   },
   components:{ NButton, NTag },
-  setup(props,context){;
+  setup(props,context){
     const naiveMessage = useMessage();
-    function setEmit(msg:string){
+    const setEmit = (msg:string)=>{
       context.emit('emit-button',msg)
     }
-    const store = useStore()
+    const store = useStore();
+    let count = ref(store.state.count)
     function addCount(){
       store.dispatch('increment',{count:100});
+      count.value = store.state.count
     };
     function resetCount(){
       store.dispatch('reset');
+      count.value = store.state.count
     }
-    return{
-      naiveMessage,
-      setEmit,
-      addCount,
-      resetCount,
-      store
-    }
-  },
-  data(){
-    return{
-      imgUrl:require('@/assets/logo.png'),
-      info:[] as unknown[],
-    }
-  },
-  created(){
-    this.getHttpRequest();
-    this.getCoindeskApi();
-  },
-  computed:{
-    ...mapState(['count','avatar_url'])
-  },
-  methods:{
-    /**使用自定义的axios封装进行请求 */
-    getHttpRequest(){
-      this.$get('/users/microsoft').then(res=>{
+    const imgUrl = ref(require('@/assets/logo.png'));
+    let infoData = ref([] as unknown[]);
+
+    function getHttpRequest(){
+      $get('/users/jiaoshibo').then(res=>{
         let data = res.data;
-        this.store.dispatch('set_avatar_url',{url:data.avatar_url});
-        this.imgUrl = this.store.state.avatar_url;
+        store.dispatch('set_avatar_url',{url:data.avatar_url});
+        imgUrl.value = store.state.avatar_url;
       }).catch(err=>{
-        this.naiveMessage.error(err)
+        naiveMessage.error(err)
       })
-    },
-    getCoindeskApi(){
-      this.$get('https://api.coindesk.com/v1/bpi/currentprice.json').then(res=>{
+    };
+    function getCoindeskApi(){
+      $get('https://api.coindesk.com/v1/bpi/currentprice.json').then(res=>{
         let data = res.data;
-        this.info = data.bpi;
+        infoData.value = data.bpi;
+        console.log(infoData.value)
+      }).catch(err=>{
+        naiveMessage.error(err)
       })
-    },
+    };
+    onMounted(()=>{
+      getHttpRequest();
+      getCoindeskApi();
+    })
     /**
      * 保留指定的小数位数
      * @param value 待处理的值
      * @param number 保留的小数位数，默认2位
      */
-    toFixedValue(value:number,number=2){
+    function toFixedValue(value:number,number=2){
       return value.toFixed(number)
+    }
+    return {
+      naiveMessage,
+      setEmit,
+      addCount,
+      resetCount,
+      imgUrl,
+      infoData,
+      toFixedValue,
+      count
     }
   }
 });
