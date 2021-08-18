@@ -22,6 +22,12 @@ const routes: Array<RouteRecordRaw> = [
     name:'naive',
     meta:{title:'naive'},
     component:()=>import('../views/Naive.vue')
+  },
+  {
+    path:'/canvas',
+    name:'canvas',
+    meta:{title:'canvas'},
+    component:()=>import('../views/Canvas.vue')
   }
 ]
 
