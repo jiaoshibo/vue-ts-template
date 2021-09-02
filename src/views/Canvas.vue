@@ -5,12 +5,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent,nextTick } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 
 export default defineComponent({
   name:'canvas',
   setup() {
-    nextTick(()=>{
+    onMounted(()=>{
       let canvas = <HTMLCanvasElement>document.getElementById('canvas')
       let context = <CanvasRenderingContext2D>canvas.getContext('2d')
       const canvasWidth=800
