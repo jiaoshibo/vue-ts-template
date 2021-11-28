@@ -145,7 +145,7 @@ export default defineComponent({
     function confirmDialogBtn(flag:boolean){
       console.log(toRaw(formValue))
       changeModalValue(flag)
-    };
+    }
 
     // 表格 start
 
@@ -153,7 +153,7 @@ export default defineComponent({
     const columns = reactive([
       {
         type: "selection",
-        disabled(row:any, index:number) {
+        disabled(row:any) {
           return row.name === "Edward King 3";
         },
       },

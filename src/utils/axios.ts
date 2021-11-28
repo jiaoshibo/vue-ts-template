@@ -42,7 +42,7 @@ axios.interceptors.response.use(
       const code = error.response.status;
       const msg = error.response.data.message;
       naiveMessage.error(msg)
-      console.error(`[Axios Error]`, error.response)
+      console.error(`[Axios Error]：${code}`, error.response)
     }else{
       console.error(`${error}`)
     }
@@ -63,7 +63,7 @@ export function $post(url:string,params?: any,config:AxiosRequestConfig={ header
       console.log(err);
     });
   })
-};
+}
 export function $postForJson(url:string,params?:{[key:string]:any},config:AxiosRequestConfig={headers: {'Content-Type': 'application/json'}}):Promise<AxiosResponse>{
   return new Promise((resolve, _reject) => {
     axios.post(url, params, config).then(res => {

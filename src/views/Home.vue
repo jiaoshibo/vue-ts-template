@@ -18,7 +18,7 @@ export default defineComponent({
     const message = useMessage()
     function getEmitButton(v:string){
       message.success(v)
-    };
+    }
     return {getEmitButton}
   }
 });
